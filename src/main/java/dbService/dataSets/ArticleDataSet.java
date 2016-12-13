@@ -5,16 +5,16 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "user_message")
+@Table(name = "article")
 public class ArticleDataSet implements Serializable { // Serializable Important to Hibernate!
     private static final long serialVersionUID = -8706689714326132798L;
 
-    @Id
     @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Id
     @Column(name = "article_id", unique = true, updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long article_id;
 
     @Column(name = "secure")
@@ -31,7 +31,7 @@ public class ArticleDataSet implements Serializable { // Serializable Important 
     public ArticleDataSet() {
     }
 
-    public ArticleDataSet(long id, long article_id, char secure, String text, Date date) {
+    public ArticleDataSet(long id, char secure, String text, Date date) {
         this.setId(id);
         this.setArticleId(article_id);
         this.setSecure(secure);

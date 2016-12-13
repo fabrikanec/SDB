@@ -9,15 +9,15 @@ import java.util.Date;
 public class MessageDataSet implements Serializable { // Serializable Important to Hibernate!
     private static final long serialVersionUID = -8706689714326132798L;
 
-    @Id
     @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Id
     @Column(name = "message_id", unique = true, updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long message_id;
 
-    @Column(name = "reseaver_msg_deleted", updatable = false)
+    @Column(name = "receaver_msg_deleted", updatable = false)
     private char receaverMsgDeletedFlag;
 
     @Column (name = "poster_msg_deleted")

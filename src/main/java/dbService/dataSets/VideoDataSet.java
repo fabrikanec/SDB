@@ -5,29 +5,29 @@ import java.io.Serializable;
 import java.sql.Blob;
 
 @Entity
-@Table(name = "user_photo")
-public class PhotoDataSet implements Serializable { // Serializable Important to Hibernate!
+@Table(name = "user_video")
+public class VideoDataSet implements Serializable { // Serializable Important to Hibernate!
     private static final long serialVersionUID = -8706689714326132798L;
 
     @Column(name = "user_id")
     private long id;
 
     @Id
-    @Column(name = "photo_id", unique = true, updatable = false)
+    @Column(name = "video_id", unique = true, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long photo_id;
+    private long video_id;
 
-    @Column(name = "photo")
-    private Blob photo;
+    @Column(name = "video")
+    private Blob video;
 
     //Important to Hibernate!
     @SuppressWarnings("UnusedDeclaration")
-    public PhotoDataSet() {
+    public VideoDataSet() {
     }
 
-    public PhotoDataSet(long id, long photo_id) {
+    public VideoDataSet(long id, long video_id) {
         this.setId(id);
-        this.setPhotoId(photo_id);
+        this.setVideoId(video_id);
     }
 
 
@@ -41,19 +41,19 @@ public class PhotoDataSet implements Serializable { // Serializable Important to
         this.id = id;
     }
 
-    public long getPhotoId() { return photo_id; }
+    public long getVideoId() { return video_id; }
 
-    public void setPhotoId(long photo_id) { this.photo_id = photo_id; }
+    public void setVideoId(long video_id) { this.video_id = video_id; }
 
-    public Blob getPhoto() { return photo; }
+    public Blob getVideo() { return video; }
 
-    public void setPhoto(Blob photo) { this.photo = photo; }
+    public void setVideo(Blob video) { this.video = video; }
 
     @Override
     public String toString() {
         return "PlayListDataSet{" +
                 "id=" + id +
-                ", track_id='" + photo_id + '\'' +
+                ", track_id='" + video_id + '\'' +
                 '}';
     }
 }

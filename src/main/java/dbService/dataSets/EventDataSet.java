@@ -4,16 +4,16 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "user_message")
+@Table(name = "event")
 public class EventDataSet implements Serializable { // Serializable Important to Hibernate!
     private static final long serialVersionUID = -8706689714326132798L;
 
-    @Id
     @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Id
     @Column(name = "event_id", unique = true, updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long event_id;
 
     @Column(name = "name")
@@ -30,7 +30,7 @@ public class EventDataSet implements Serializable { // Serializable Important to
     public EventDataSet() {
     }
 
-    public EventDataSet(long id, long event_id, String name, String text, String subj) {
+    public EventDataSet(long id, String name, String text, String subj) {
         this.setId(id);
         this.setEventId(event_id);
         this.setName(name);

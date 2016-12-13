@@ -1,6 +1,7 @@
 package main;
 
 import accounts.AccountService;
+import accounts.UserProfile;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -25,14 +26,15 @@ public class Main {
 
         //dbService.printConnectInfo();
 
-        AllRequestsServlet allRequestsServlet = new AllRequestsServlet();
+        //AllRequestsServlet allRequestsServlet = new AllRequestsServlet();
 
+        /*
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
 	    context.addServlet(new ServletHolder(new WebSocketChatServlet()), "/chat");
-        context.addServlet(new ServletHolder(allRequestsServlet), "/*");
+        context.addServlet(new ServletHolder(new AllRequestsServlet()), "/*");
 
         ResourceHandler resource_handler = new ResourceHandler();
 	    resource_handler.setDirectoriesListed(true);
@@ -46,6 +48,21 @@ public class Main {
 
         server.start();
         java.util.logging.Logger.getGlobal().info("Server started");
-        server.join();
+        server.join(); */
+
+        long id = accountService.addNewUser(new UserProfile("Todd", "Valio"));
+        System.out.println(accountService.getUserByLogin("Todd").getPass());
+        long id_article = accountService.addArticle(id, '0', "text", new java.util.Date());
+        long id_event =  accountService.addEvent(id, "name", "TOO MUCH TEXT EVENT", "some subj");
+        System.out.println(accountService.getArticleText(id_article));
+        long id_article1 = accountService.addArticle(id, '0', "anothertext", new java.util.Date());
+        System.out.println(accountService.getArticleText(id_article));
+        System.out.println(accountService.getEventText(id_event));
+        System.out.println(accountService.getArticleText(id_article1));
+        System.out.println(accountService.getArticleText(id_article));
+
+        long id_friend = accountService.addNewUser(new UserProfile("Volly", "Valio"));
+        accountService.addFriend(id, id_friend);
+        System.out.println(accountService.getFriends(id));
     }
 }
