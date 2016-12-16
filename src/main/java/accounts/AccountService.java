@@ -5,11 +5,9 @@ import dbService.DBException;
 import dbService.DBService;
 import dbService.DBService;
 import dbService.DBServiceInterface;
-import dbService.dataSets.ArticleDataSet;
-import dbService.dataSets.EventDataSet;
-import dbService.dataSets.FriendDataSet;
-import dbService.dataSets.UsersDataSet;
+import dbService.dataSets.*;
 
+import java.sql.Blob;
 import java.util.*;
 
 
@@ -35,7 +33,7 @@ public class AccountService {
 
 
     /** UsersDataSet Logic */
-    public long addNewUser(UserProfile userProfile) throws DBException {
+    public Long addNewUser(UserProfile userProfile) throws DBException {
         //loginToProfile.put(userProfile.getLogin(), userProfile);
         return dbService.addUser(userProfile.getLogin(), userProfile.getPass());
     }
@@ -55,11 +53,11 @@ public class AccountService {
 
 
     /** ArticleDataSet Logic */
-    public long addArticle(long id, char secure, String text, Date date) throws DBException {
+    public Long addArticle(Long id, char secure, String text, Date date) throws DBException {
         return  dbService.addArticle(id,secure, text, date);
     }
 
-    public String getArticleText(long article_id) throws DBException {
+    public String getArticleText(Long article_id) throws DBException {
         ArticleDataSet dataSet = dbService.getArticle(article_id);
         if (dataSet != null) {
             return dataSet.getText();
@@ -69,11 +67,11 @@ public class AccountService {
     }
 
     /** EventDataSet Logic */
-    public long addEvent(long id, String name, String text, String subj) throws DBException {
+    public Long addEvent(Long id, String name, String text, String subj) throws DBException {
         return  dbService.addEvent(id, name, text, subj);
     }
 
-    public String getEventText(long event_id) throws DBException {
+    public String getEventText(Long event_id) throws DBException {
         EventDataSet dataSet = dbService.getEvent(event_id);
         if (dataSet != null) {
             return dataSet.getText();
@@ -83,14 +81,97 @@ public class AccountService {
     }
 
     /** FriendDataSet Logic */
-    public long addFriend(long id, long friend_id) throws DBException {
+    public Long addFriend(Long id, Long friend_id) throws DBException {
         return dbService.addFriend(id, friend_id);
     }
 
-    public Long getFriends(long id) throws DBException {
-        FriendDataSet dataSet = dbService.getFriends(id);
+    public Long getFriend(Long friend_id) throws DBException {
+        FriendDataSet dataSet = dbService.getFriend(friend_id);
         if (dataSet != null) {
-            return dataSet.getFriends();
+            return dataSet.getFriend();
+        } else {
+            return null;
+        }
+    }
+
+    /** CommentDataSet Logic */
+    public Long addComment(Long id, Long article_id, Long event_id, String text) throws DBException {
+        return  dbService.addComment(id, article_id, event_id, text);
+    }
+
+    public String getCommentText(Long comment_id) throws DBException {
+        CommentDataSet dataSet = dbService.getComment(comment_id);
+        if (dataSet != null) {
+            return dataSet.getText();
+        } else {
+            return null;
+        }
+    }
+
+    /** MessageDataSet Logic */
+    public Long addMessage(Long id, char receaverMsgDeletedFlag, char posterMsgDeletedFlag, String text, Date date) throws DBException {
+        return  dbService.addMessage(id, receaverMsgDeletedFlag, posterMsgDeletedFlag, text, date);
+    }
+
+    public String getMessageText(Long message_id) throws DBException {
+        MessageDataSet dataSet = dbService.getMessage(message_id);
+        if (dataSet != null) {
+            return dataSet.getText();
+        } else {
+            return null;
+        }
+    }
+
+    /** CommunityDataSet Logic */
+    public Long addNewCommunity(String name) throws DBException {
+        return dbService.addCommunity(name);
+    }
+
+    public void addUser(Long id, String community_name) throws DBException {
+        dbService.addUser(id, community_name);
+    }
+
+    public Set<Long> getUsers(Long com_id) throws DBException {
+        return dbService.getUsers(com_id).getUsers();
+    }
+
+    /** PhotoDataSet Logic */
+    public Long addPhoto(Long id, Blob photo) throws DBException {
+        return  dbService.addPhoto(id, photo);
+    }
+
+    public Blob getPhoto(Long photo_id) throws DBException {
+        PhotoDataSet dataSet = dbService.getPhoto(photo_id);
+        if (dataSet != null) {
+            return dataSet.getPhoto();
+        } else {
+            return null;
+        }
+    }
+
+    /** PlayListDataSet Logic */
+    public Long addTrack(Long id, Blob track) throws DBException {
+        return  dbService.addTrack(id, track);
+    }
+
+    public Blob getTrack(Long track_id) throws DBException {
+        PlayListDataSet dataSet = dbService.getTrack(track_id);
+        if (dataSet != null) {
+            return dataSet.getTrack();
+        } else {
+            return null;
+        }
+    }
+
+    /** PhotoDataSet Logic */
+    public Long addVideo(Long id, Blob video) throws DBException {
+        return  dbService.addVideo(id, video);
+    }
+
+    public Blob getVideo(Long video_id) throws DBException {
+        VideoDataSet dataSet = dbService.getVideo(video_id);
+        if (dataSet != null) {
+            return dataSet.getVideo();
         } else {
             return null;
         }

@@ -6,26 +6,30 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "friends")
+@Table(name = "friend")
 public class FriendDataSet implements Serializable { // Serializable Important to Hibernate!
-    private static final long serialVersionUID = -8706689714326132798L;
+    private static final Long serialVersionUID = -8706689714326132798L;
 
-    @Column(name = "some_user_id")
-    private long id;
+    @Column(name = "user_id")
+    private Long id;
+
+    @Column(name = "friend_id")
+    private Long friend_id;
 
     @Id
-    @Column(name = "friend_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long friend_id;
+    @Column(name = "syntetic_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long syntetic_id;
 
     //Important to Hibernate!
     @SuppressWarnings("UnusedDeclaration")
     public FriendDataSet() {
     }
 
-    public FriendDataSet(long id, long friend_id) {
+    public FriendDataSet(Long id, Long friend_id) {
         this.setId(id);
         this.setFriendId(friend_id);
 
@@ -34,17 +38,17 @@ public class FriendDataSet implements Serializable { // Serializable Important t
 
     @SuppressWarnings("UnusedDeclaration")
 
-    public void setId(long id) { this.id = id; }
+    private void setId(Long id) { this.id = id; }
 
-    //@ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
-    public long getFriends() { return friend_id; }
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "genres")
+    public Long getFriend() { return friend_id; }
 
-    public void setFriendId(long friend_id) { this.friend_id = friend_id; }
+    private void setFriendId(Long friend_id) { this.friend_id = friend_id; }
 
     public String toString() {
-        return "UserDataSet{" +
+        return "FriendDataSet{" +
                 "id=" + id +
-                ", login='" + friend_id + '\'' +
+                ", friend_id='" + friend_id + '\'' +
                 '}';
     }
 }

@@ -7,15 +7,15 @@ import java.util.Date;
 @Entity
 @Table(name = "article")
 public class ArticleDataSet implements Serializable { // Serializable Important to Hibernate!
-    private static final long serialVersionUID = -8706689714326132798L;
+    private static final Long serialVersionUID = -8706689714326132798L;
 
     @Column(name = "user_id")
-    private long id;
+    private Long id;
 
     @Id
     @Column(name = "article_id", unique = true, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long article_id;
+    private Long article_id;
 
     @Column(name = "secure")
     private char secure;
@@ -31,9 +31,9 @@ public class ArticleDataSet implements Serializable { // Serializable Important 
     public ArticleDataSet() {
     }
 
-    public ArticleDataSet(long id, char secure, String text, Date date) {
+    public ArticleDataSet(Long id, char secure, String text, Date date) {
         this.setId(id);
-        this.setArticleId(article_id);
+        //this.setArticleId(article_id);
         this.setSecure(secure);
         this.setText(text);
         this.setDate(date);
@@ -42,19 +42,17 @@ public class ArticleDataSet implements Serializable { // Serializable Important 
 
     @SuppressWarnings("UnusedDeclaration")
 
-    public long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
 
-    public void setId(long id) {
+    private void setId(Long id) {
         this.id = id;
     }
 
-    public long getArticleId() {
+    public Long getArticleId() {
         return article_id;
     }
 
-    public void setArticleId(long article_id) {
+    private void setArticleId(Long article_id) {
         this.article_id = article_id;
     }
 
@@ -71,9 +69,9 @@ public class ArticleDataSet implements Serializable { // Serializable Important 
     public void setDate(Date date) { this.date = date; }
 
     public String toString() {
-        return "UserDataSet{" +
+        return "ArticleDataSet{" +
                 "id=" + id +
-                ", login='" + article_id + '\'' +
+                ", article_id='" + article_id + '\'' +
                 '}';
     }
 }

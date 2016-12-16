@@ -2,6 +2,8 @@ package dbService.dataSets;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -26,6 +28,8 @@ public class UsersDataSet implements Serializable { // Serializable Important to
     @Column (name = "surname")
     private String surname;
 
+
+    private Set<Long> communities = new HashSet<>();
 
     //Important to Hibernate!
     @SuppressWarnings("UnusedDeclaration")
@@ -63,7 +67,7 @@ public class UsersDataSet implements Serializable { // Serializable Important to
         return id;
     }
 
-    public void setId(long id) {
+    private void setId(long id) {
         this.id = id;
     }
 
@@ -97,6 +101,21 @@ public class UsersDataSet implements Serializable { // Serializable Important to
 
     public void setSurname(String surname) { this.surname = surname; }
 
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    public Set<Long> getCommunities() {
+        return communities;
+    }
+
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    public void setCommunities(Set<Long> communities) {
+        this.communities = communities;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    public void setCommunity(Long community_id) {
+        this.communities.add(community_id);
+    }
 
     @Override
     public String toString() {

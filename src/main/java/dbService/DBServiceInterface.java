@@ -1,22 +1,44 @@
 package dbService;
 
-import dbService.dataSets.ArticleDataSet;
-import dbService.dataSets.EventDataSet;
-import dbService.dataSets.FriendDataSet;
-import dbService.dataSets.UsersDataSet;
+import dbService.dataSets.*;
 
+import java.sql.Blob;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by nikitaborodulin on 23/01/16.
  */
 public interface DBServiceInterface {
-    long addUser(String login, String password) throws DBException;
+    /** user logic */
+    Long addUser(String login, String password) throws DBException;
     UsersDataSet getUser(String login) throws DBException;
-    long addArticle(long id, char secure, String text, Date date) throws DBException;
-    ArticleDataSet getArticle(long article_id) throws DBException;
-    long addFriend(long id, long friend_id) throws DBException;
-    FriendDataSet getFriends(long id) throws DBException;
-    long addEvent(long id, String name, String text, String subj) throws DBException;
-    EventDataSet getEvent(long id) throws DBException;
+    /** article logic */
+    Long addArticle(Long id, char secure, String text, Date date) throws DBException;
+    ArticleDataSet getArticle(Long article_id) throws DBException;
+    /** friend logic */
+    Long addFriend(Long id, Long friend_id) throws DBException;
+    FriendDataSet getFriend(Long id) throws DBException;
+    /** event logic */
+    Long addEvent(Long id, String name, String text, String subj) throws DBException;
+    EventDataSet getEvent(Long id) throws DBException;
+    /** comment logic */
+    Long addComment(Long id, Long article_id, Long event_id, String text) throws DBException;
+    CommentDataSet getComment(Long id) throws DBException;
+    /** message logic */
+    Long addMessage(Long id, char receaverMsgDeletedFlag, char posterMsgDeletedFlag, String text, Date date) throws DBException;
+    MessageDataSet getMessage(Long message_id) throws DBException;
+    /** community logic */
+    Long addCommunity(String name) throws DBException;
+    Long addUser(Long id, String name) throws DBException;
+    CommunityDataSet getUsers(Long com_id) throws DBException;
+    /** photo logic*/
+    Long addPhoto(Long id, Blob photo) throws DBException;
+    PhotoDataSet getPhoto(Long photo_id) throws DBException;
+    /** playList logic*/
+    Long addTrack(Long id, Blob track) throws DBException;
+    PlayListDataSet getTrack(Long track_id) throws DBException;
+    /** video logic*/
+    Long addVideo(Long id, Blob video) throws DBException;
+    VideoDataSet getVideo(Long video_id) throws DBException;
 }

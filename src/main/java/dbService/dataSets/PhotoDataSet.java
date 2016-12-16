@@ -7,15 +7,15 @@ import java.sql.Blob;
 @Entity
 @Table(name = "user_photo")
 public class PhotoDataSet implements Serializable { // Serializable Important to Hibernate!
-    private static final long serialVersionUID = -8706689714326132798L;
+    private static final Long serialVersionUID = -8706689714326132798L;
 
     @Column(name = "user_id")
-    private long id;
+    private Long id;
 
     @Id
     @Column(name = "photo_id", unique = true, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long photo_id;
+    private Long photo_id;
 
     @Column(name = "photo")
     private Blob photo;
@@ -25,25 +25,26 @@ public class PhotoDataSet implements Serializable { // Serializable Important to
     public PhotoDataSet() {
     }
 
-    public PhotoDataSet(long id, long photo_id) {
+    public PhotoDataSet(Long id, Blob photo) {
         this.setId(id);
-        this.setPhotoId(photo_id);
+        //this.setPhotoId(photo_id);
+        this.setPhoto(photo);
     }
 
 
     @SuppressWarnings("UnusedDeclaration")
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    private void setId(Long id) {
         this.id = id;
     }
 
-    public long getPhotoId() { return photo_id; }
+    public Long getPhotoId() { return photo_id; }
 
-    public void setPhotoId(long photo_id) { this.photo_id = photo_id; }
+    private void setPhotoId(Long photo_id) { this.photo_id = photo_id; }
 
     public Blob getPhoto() { return photo; }
 
@@ -51,9 +52,9 @@ public class PhotoDataSet implements Serializable { // Serializable Important to
 
     @Override
     public String toString() {
-        return "PlayListDataSet{" +
+        return "PhotoDataSet{" +
                 "id=" + id +
-                ", track_id='" + photo_id + '\'' +
+                ", photo_id='" + photo_id + '\'' +
                 '}';
     }
 }

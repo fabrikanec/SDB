@@ -7,15 +7,15 @@ import java.sql.Blob;
 @Entity
 @Table(name = "user_video")
 public class VideoDataSet implements Serializable { // Serializable Important to Hibernate!
-    private static final long serialVersionUID = -8706689714326132798L;
+    private static final Long serialVersionUID = -8706689714326132798L;
 
     @Column(name = "user_id")
-    private long id;
+    private Long id;
 
     @Id
     @Column(name = "video_id", unique = true, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long video_id;
+    private Long video_id;
 
     @Column(name = "video")
     private Blob video;
@@ -25,25 +25,26 @@ public class VideoDataSet implements Serializable { // Serializable Important to
     public VideoDataSet() {
     }
 
-    public VideoDataSet(long id, long video_id) {
+    public VideoDataSet(Long id, Blob video) {
         this.setId(id);
-        this.setVideoId(video_id);
+        //this.setVideoId(video_id);
+        this.setVideo(video);
     }
 
 
     @SuppressWarnings("UnusedDeclaration")
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    private void setId(Long id) {
         this.id = id;
     }
 
-    public long getVideoId() { return video_id; }
+    public Long getVideoId() { return video_id; }
 
-    public void setVideoId(long video_id) { this.video_id = video_id; }
+    private void setVideoId(Long video_id) { this.video_id = video_id; }
 
     public Blob getVideo() { return video; }
 
@@ -51,9 +52,9 @@ public class VideoDataSet implements Serializable { // Serializable Important to
 
     @Override
     public String toString() {
-        return "PlayListDataSet{" +
+        return "VideoDataSet{" +
                 "id=" + id +
-                ", track_id='" + video_id + '\'' +
+                ", video_id='" + video_id + '\'' +
                 '}';
     }
 }

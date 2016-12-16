@@ -6,15 +6,15 @@ import java.io.Serializable;
 @Entity
 @Table(name = "event")
 public class EventDataSet implements Serializable { // Serializable Important to Hibernate!
-    private static final long serialVersionUID = -8706689714326132798L;
+    private static final Long serialVersionUID = -8706689714326132798L;
 
     @Column(name = "user_id")
-    private long id;
+    private Long id;
 
     @Id
     @Column(name = "event_id", unique = true, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long event_id;
+    private Long event_id;
 
     @Column(name = "name")
     private String name;
@@ -30,9 +30,9 @@ public class EventDataSet implements Serializable { // Serializable Important to
     public EventDataSet() {
     }
 
-    public EventDataSet(long id, String name, String text, String subj) {
+    public EventDataSet(Long id, String name, String text, String subj) {
         this.setId(id);
-        this.setEventId(event_id);
+        //this.setEventId(event_id);
         this.setName(name);
         this.setText(text);
         this.setSubj(subj);
@@ -41,21 +41,19 @@ public class EventDataSet implements Serializable { // Serializable Important to
 
     @SuppressWarnings("UnusedDeclaration")
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    private void setId(Long id) {
         this.id = id;
     }
 
-    public long getEventId() {
+    public Long getEventId() {
         return event_id;
     }
 
-    public void setEventId(long event_id) {
-        this.event_id = event_id;
-    }
+    private void setEventId(Long event_id) { this.event_id = event_id; }
 
     public String getName() { return name; }
 
@@ -70,9 +68,9 @@ public class EventDataSet implements Serializable { // Serializable Important to
     public void setSubj(String subj) { this.subj = subj; }
 
     public String toString() {
-        return "UserDataSet{" +
+        return "EventDataSet{" +
                 "id=" + id +
-                ", login='" + event_id + '\'' +
+                ", event_id='" + event_id + '\'' +
                 '}';
     }
 }

@@ -7,17 +7,17 @@ import java.util.Date;
 @Entity
 @Table(name = "user_message")
 public class MessageDataSet implements Serializable { // Serializable Important to Hibernate!
-    private static final long serialVersionUID = -8706689714326132798L;
+    private static final Long serialVersionUID = -8706689714326132798L;
 
     @Column(name = "user_id")
-    private long id;
+    private Long id;
 
     @Id
     @Column(name = "message_id", unique = true, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long message_id;
+    private Long message_id;
 
-    @Column(name = "receaver_msg_deleted", updatable = false)
+    @Column(name = "receaver_msg_deleted")
     private char receaverMsgDeletedFlag;
 
     @Column (name = "poster_msg_deleted")
@@ -34,9 +34,9 @@ public class MessageDataSet implements Serializable { // Serializable Important 
     public MessageDataSet() {
     }
 
-    public MessageDataSet(long id, long message_id, char receaverMsgDeletedFlag, char posterMsgDeletedFlag, String text, Date date) {
+    public MessageDataSet(Long id, char receaverMsgDeletedFlag, char posterMsgDeletedFlag, String text, Date date) {
         this.setId(id);
-        this.setMessageId(message_id);
+        //this.setMessageId(message_id);
         this.setReceaverMsgDeleted(receaverMsgDeletedFlag);
         this.setPosterMsgDeleted(posterMsgDeletedFlag);
         this.setText(text);
@@ -46,19 +46,19 @@ public class MessageDataSet implements Serializable { // Serializable Important 
 
     @SuppressWarnings("UnusedDeclaration")
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    private void setId(Long id) {
         this.id = id;
     }
 
-    public long getMessageId() {
+    public Long getMessageId() {
         return message_id;
     }
 
-    public void setMessageId(long message_id) {
+    private void setMessageId(Long message_id) {
         this.message_id = message_id;
     }
 
@@ -87,9 +87,9 @@ public class MessageDataSet implements Serializable { // Serializable Important 
     public void setDate(Date date) { this.date = date; }
 
     public String toString() {
-        return "UserDataSet{" +
+        return "MessageDataSet{" +
                 "id=" + id +
-                ", login='" + message_id + '\'' +
+                ", message_id='" + message_id + '\'' +
                 '}';
     }
 }

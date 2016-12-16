@@ -8,6 +8,7 @@ import org.hibernate.criterion.Restrictions;
 
 import java.util.Date;
 
+//PASSED
 public class ArticleDAO {
     private Session session;
 
@@ -15,12 +16,12 @@ public class ArticleDAO {
         this.session = session;
     }
 
-    public ArticleDataSet getArticle(long article_id) throws HibernateException {
+    public ArticleDataSet getArticle(Long article_id) throws HibernateException {
         Criteria criteria = session.createCriteria(ArticleDataSet.class);
         return ((ArticleDataSet) criteria.add(Restrictions.eq("article_id", article_id)).uniqueResult());
     }
 
-    public long insertArticle(long id, char secure, String text, Date date) throws HibernateException {
+    public Long insertArticle(Long id, char secure, String text, Date date) throws HibernateException {
         return (Long) session.save(new ArticleDataSet(id, secure, text, date));
     }
 }
