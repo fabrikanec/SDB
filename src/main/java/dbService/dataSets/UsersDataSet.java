@@ -9,12 +9,12 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class UsersDataSet implements Serializable { // Serializable Important to Hibernate!
-    private static final long serialVersionUID = -8706689714326132798L;
+    private static final Long serialVersionUID = -8706689714326132798L;
 
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id = 0L;
 
     @Column(name = "login", unique = true, updatable = false)
     private String login;
@@ -28,7 +28,7 @@ public class UsersDataSet implements Serializable { // Serializable Important to
     @Column (name = "surname")
     private String surname;
 
-
+    @ManyToMany(targetEntity = CommunityDataSet.class, mappedBy="users") //, fetch = FetchType.LAZY
     private Set<Long> communities = new HashSet<>();
 
     //Important to Hibernate!
@@ -36,8 +36,8 @@ public class UsersDataSet implements Serializable { // Serializable Important to
     public UsersDataSet() {
     }
 
-    public UsersDataSet(long id, String login, String password, String name, String surname) {
-        this.setId(id);
+    public UsersDataSet(Long id, String login, String password, String name, String surname) {
+        //this.setId(id);
         this.setLogin(login);
         this.setPassword(password);
         this.setName(name);
@@ -45,8 +45,8 @@ public class UsersDataSet implements Serializable { // Serializable Important to
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public UsersDataSet(long id, String login, String password) {
-        this.setId(id);
+    public UsersDataSet(Long id, String login, String password) {
+        //this.setId(id);
         this.setLogin(login);
         this.setPassword(password);
         this.setName(login);
@@ -54,7 +54,7 @@ public class UsersDataSet implements Serializable { // Serializable Important to
     }
 
     public UsersDataSet(String login, String password) {
-        this.setId(-1);
+        //this.setId(++this.id);
         this.setLogin(login);
         this.setPassword(password);
         this.setName(login);
@@ -63,11 +63,11 @@ public class UsersDataSet implements Serializable { // Serializable Important to
 
     @SuppressWarnings("UnusedDeclaration")
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    private void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -101,18 +101,14 @@ public class UsersDataSet implements Serializable { // Serializable Important to
 
     public void setSurname(String surname) { this.surname = surname; }
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
     public Set<Long> getCommunities() {
         return communities;
     }
 
-
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
     public void setCommunities(Set<Long> communities) {
         this.communities = communities;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
     public void setCommunity(Long community_id) {
         this.communities.add(community_id);
     }

@@ -50,39 +50,45 @@ public class Main {
         java.util.logging.Logger.getGlobal().info("Server started");
         server.join(); */
 
-        long id = accountService.addNewUser(new UserProfile("Todd", "Valio"));
-        System.out.println(accountService.getUserByLogin("Todd").getPass());
+        Long id = accountService.addNewUser(new UserProfile("Todd", "Valio"));
+        System.out.println(accountService.getUserProfileByLogin("Todd").getPass());
+        Long id1 = accountService.addNewUser(new UserProfile("Valio", "Todd"));
 
-        long id_article = accountService.addArticle(id, '0', "text", new java.util.Date());
-        long id_event =  accountService.addEvent(id, "name", "TOO MUCH TEXT EVENT", "some subj");
+        Long id_article = accountService.addArticle(id, '0', "text", new java.util.Date());
+        Long id_event =  accountService.addEvent(id, "name", "TOO MUCH TEXT EVENT", "some subj");
         System.out.println(accountService.getArticleText(id_article));
 
-        long id_article1 = accountService.addArticle(id, '0', "anothertext", new java.util.Date());
+        Long id_article1 = accountService.addArticle(id, '0', "anothertext", new java.util.Date());
         System.out.println(accountService.getArticleText(id_article));
         System.out.println(accountService.getEventText(id_event));
 
-        long _id_event = accountService.addEvent(id, "name", "TOO", "some subj");
+        Long _id_event = accountService.addEvent(id, "name", "TOO", "some subj");
         System.out.println(accountService.getArticleText(id_article1));
         System.out.println(accountService.getEventText(_id_event));
         System.out.println(accountService.getEventText(id_event));
         System.out.println(accountService.getArticleText(id_article));
 
-        long id_comment = accountService.addComment(id, id_article, id_event, "kekich");
-        long id_comment1 = accountService.addComment(id, id_article, id_event, "lolich");
+        Long id_comment = accountService.addComment(id, id_article, id_event, "kekich");
+        Long id_comment1 = accountService.addComment(id, id_article, id_event, "lolich");
         System.out.println(accountService.getCommentText(id_comment1));
         System.out.println(accountService.getCommentText(id_comment));
         System.out.println(accountService.getCommentText(id_comment));
         System.out.println(accountService.getCommentText(id_comment1));
 
-        long id_msg = accountService.addMessage(id, '0', '0', "msg", new java.util.Date());
-        long id_msg1 = accountService.addMessage(id, '0', '0', "msg666", new java.util.Date());
+        Long id_msg = accountService.addMessage(id, '0', '0', "msg", new java.util.Date());
+        Long id_msg1 = accountService.addMessage(id, '0', '0', "msg666", new java.util.Date());
         System.out.println(accountService.getMessageText(id_msg));
         System.out.println(accountService.getMessageText(id_msg1));
 
-        long id_com = accountService.addNewCommunity("Community");
+        //Long id_com = accountService.addNewCommunity("Community");
+        accountService.addUser(accountService.getUserByLogin("Todd"), "Community");
+        accountService.addUser(accountService.getUserByLogin("Valio"), "Community");
+        Long fromComUser = accountService.getUsers("Community").get(0).getId();
+        Long fromComUser1 = accountService.getUsers("Community").get(1).getId();
+        System.out.println((fromComUser.equals(id)));
+        System.out.println(fromComUser1.equals(id1));
 
-
-        //long id_friend = accountService.addNewUser(new UserProfile("Volly", "Valio"));
+        //Long id_friend = accountService.addNewUser(new UserProfile("Volly", "Valio"));
         //accountService.addFriend(id, id_friend);
         //System.out.println(accountService.getFriend(id));
     }

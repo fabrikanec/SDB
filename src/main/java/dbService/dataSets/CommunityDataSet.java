@@ -15,12 +15,18 @@ public class CommunityDataSet implements Serializable { // Serializable Importan
     @Column(name = "user_id")
     private Long id;
 
+    @Id
+    @Column(name = "community_id", updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long community_id;
 
     @Column(name = "community_name")
     private String community_name;
 
-    private Set<Long> users = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER) // fetch = FetchType.LAZY
+    //@JoinTable(name = "users_communities", joinColumns = @JoinColumn(name = "community_name"),
+            //inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<UsersDataSet> users = new HashSet<>();
 
     //Important to Hibernate!
     @SuppressWarnings("UnusedDeclaration")
@@ -33,46 +39,40 @@ public class CommunityDataSet implements Serializable { // Serializable Importan
         this.setCommunityName(community_name);
     }
 
-    public CommunityDataSet(Long user_id, String community_name) {
-        this.setUser(user_id);
+    public CommunityDataSet(UsersDataSet user, String community_name) {
+        this.setUser(user);
+        this.setId(user);
         //this.setCommunityId(community_id);
         this.setCommunityName(community_name);
-
     }
 
     @SuppressWarnings("UnusedDeclaration")
 
     public Long getId() { return id; }
 
-    private void setId(Long id) {
-        this.id = id;
+    public void setId(UsersDataSet user) {
+        this.id = user.getId();
     }
 
-    @Id
-    @Column(name = "community_id", unique = true, updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getCommunityId() {
         return community_id;
     }
 
-    private void setCommunityId(Long community_id) {
+    public void setCommunityId(Long community_id) {
         this.community_id = community_id;
     }
 
     public String getCommunityName() { return community_name;}
 
-    public void setCommunityName(String name) { this.community_name = community_name;}
+    public void setCommunityName(String name) { this.community_name = name;}
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "users_communities", joinColumns = @JoinColumn(name = "community_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    public Set<Long> getUsers() {
+    public Set<UsersDataSet> getUsers() {
         return users;
     }
 
     //public void setUsers(Set<Long> users) { this.users = users; }
 
-    public void setUser(Long user) {
+    public void setUser(UsersDataSet user) {
         this.users.add(user);
     }
 

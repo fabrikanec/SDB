@@ -38,10 +38,18 @@ public class AccountService {
         return dbService.addUser(userProfile.getLogin(), userProfile.getPass());
     }
 
-    public UserProfile getUserByLogin(String login) throws DBException {
+    public UserProfile getUserProfileByLogin(String login) throws DBException {
         UsersDataSet dataSet = dbService.getUser(login);
         if (dataSet != null) {
             return new UserProfile(dataSet.getLogin(), dataSet.getPassword());
+        } else {
+            return null;
+        }
+    }
+    public UsersDataSet getUserByLogin(String login) throws DBException {
+        UsersDataSet dataSet = dbService.getUser(login);
+        if (dataSet != null) {
+            return dataSet;
         } else {
             return null;
         }
@@ -127,12 +135,13 @@ public class AccountService {
         return dbService.addCommunity(name);
     }
 
-    public void addUser(Long id, String community_name) throws DBException {
-        dbService.addUser(id, community_name);
+    public Long addUser(UsersDataSet user, String community_name) throws DBException {
+        return dbService.addUser(user, community_name);
     }
 
-    public Set<Long> getUsers(Long com_id) throws DBException {
-        return dbService.getUsers(com_id).getUsers();
+    public List<CommunityDataSet> getUsers(String com_name) throws DBException {
+        return dbService.getUsers(com_name);
+
     }
 
     /** PhotoDataSet Logic */

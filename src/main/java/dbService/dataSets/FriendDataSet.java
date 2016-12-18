@@ -40,7 +40,7 @@ public class FriendDataSet implements Serializable { // Serializable Important t
 
     private void setId(Long id) { this.id = id; }
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "genres")
+    //@ManyToMany(fetch = FetchType.LAZY, mappedBy = "genres")
     public Long getFriend() { return friend_id; }
 
     private void setFriendId(Long friend_id) { this.friend_id = friend_id; }

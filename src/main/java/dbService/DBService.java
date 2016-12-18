@@ -89,7 +89,7 @@ public class DBService implements DBServiceInterface {
     }
 
     /** UsersDataSet Logic */
-    public UsersDataSet getUser(Long id) throws DBException {
+    public UsersDataSet getUserById(Long id) throws DBException {
         try {
             Session session = sessionFactory.openSession();
             UsersDAO dao = new UsersDAO(session);
@@ -277,12 +277,12 @@ public class DBService implements DBServiceInterface {
         }
     }
 
-    public Long addUser(Long id, String communityName) throws DBException {
+    public Long addUser(UsersDataSet user, String communityName) throws DBException {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
             CommunityDAO dao = new CommunityDAO(session);
-            Long user_id =  dao.addUser(id, communityName);
+            Long user_id =  dao.addUser(user, communityName);
             transaction.commit();
             session.close();
             return user_id;
@@ -291,11 +291,11 @@ public class DBService implements DBServiceInterface {
         }
     }
 
-    public CommunityDataSet getUsers(Long com_id) throws DBException {
+    public List<CommunityDataSet> getUsers(String com_name) throws DBException {
         try {
             Session session = sessionFactory.openSession();
             CommunityDAO dao = new CommunityDAO(session);
-            CommunityDataSet dataSet = dao.getUsers(com_id);
+            List<CommunityDataSet> dataSet = dao.getUsers(com_name);
             session.close();
             return dataSet;
         } catch (HibernateException e) {

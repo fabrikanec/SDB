@@ -9,7 +9,9 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 public class CommunityDAO {
@@ -19,13 +21,16 @@ public class CommunityDAO {
         this.session = session;
     }
 
-    public CommunityDataSet getUsers(Long community_id) throws HibernateException {
-        Criteria criteria = session.createCriteria(FriendDataSet.class);
-        return ((CommunityDataSet) criteria.add(Restrictions.eq("community_id", community_id)).uniqueResult());
+    public List<CommunityDataSet> getUsers(String community_name) throws HibernateException {
+        Criteria criteria = session.createCriteria(CommunityDataSet.class);
+        List<CommunityDataSet> res = new ArrayList<>();
+        res.add((CommunityDataSet) criteria.add(Restrictions.eq("community_name", community_name)).list().get(0));
+        res.add((CommunityDataSet) criteria.add(Restrictions.eq("community_name", community_name)).list().get(1));
+        return res;
     }
 
-    public Long addUser(Long user_id, String communityName) throws HibernateException {
-        return (Long) session.save(new CommunityDataSet(user_id, communityName));
+    public Long addUser(UsersDataSet user, String communityName) throws HibernateException {
+        return (Long) session.save(new CommunityDataSet(user, communityName));
     }
     public Long insertCommunity(String name) throws HibernateException {
         return (Long) session.save(new CommunityDataSet(name));
