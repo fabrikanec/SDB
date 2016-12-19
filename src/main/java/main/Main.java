@@ -50,6 +50,7 @@ public class Main {
         java.util.logging.Logger.getGlobal().info("Server started");
         server.join(); */
 
+        //insert to db
         Long id = accountService.addNewUser(new UserProfile("Todd", "Valio"));
         System.out.println(accountService.getUserProfileByLogin("Todd").getPass());
         Long id1 = accountService.addNewUser(new UserProfile("Valio", "Todd"));
@@ -89,6 +90,7 @@ public class Main {
 
         Long id_friend = accountService.addNewUser(new UserProfile("Volly", "Valio"));
         accountService.addFriend(accountService.getUserByLogin("Volly"), accountService.getUserByLogin("Todd"));
-        System.out.println(accountService.getFriend(id_friend) == id);
+        System.out.println(accountService.getFriend(id_friend).equals(id));
+        //
     }
 }

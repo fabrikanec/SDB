@@ -26,14 +26,25 @@ public class DBService implements DBServiceInterface {
     private final SessionFactory sessionFactory;
 
     public DBService() {
-        Configuration configuration = getH2Configuration();
+        //Configuration configuration = getH2Configuration();
+        Configuration configuration = getPostgresqlConfiguration();
         sessionFactory = createSessionFactory(configuration);
     }
 
     @SuppressWarnings("UnusedDeclaration")
     private Configuration getPostgresqlConfiguration() {
         Configuration configuration = new Configuration();
+
         configuration.addAnnotatedClass(UsersDataSet.class);
+        configuration.addAnnotatedClass(ArticleDataSet.class);
+        configuration.addAnnotatedClass(FriendDataSet.class);
+        configuration.addAnnotatedClass(EventDataSet.class);
+        configuration.addAnnotatedClass(CommentDataSet.class);
+        configuration.addAnnotatedClass(MessageDataSet.class);
+        configuration.addAnnotatedClass(CommunityDataSet.class);
+        configuration.addAnnotatedClass(PhotoDataSet.class);
+        configuration.addAnnotatedClass(PlayListDataSet.class);
+        configuration.addAnnotatedClass(VideoDataSet.class);
 
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         configuration.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
@@ -47,6 +58,7 @@ public class DBService implements DBServiceInterface {
 
     private Configuration getH2Configuration() {
         Configuration configuration = new Configuration();
+
         configuration.addAnnotatedClass(UsersDataSet.class);
         configuration.addAnnotatedClass(ArticleDataSet.class);
         configuration.addAnnotatedClass(FriendDataSet.class);
