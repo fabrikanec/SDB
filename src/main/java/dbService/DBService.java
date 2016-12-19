@@ -182,12 +182,12 @@ public class DBService implements DBServiceInterface {
     }
 
     /** FriendDataSet Logic */
-    public Long addFriend(Long id, Long friend_id) throws DBException {
+    public Long addFriend(UsersDataSet user, UsersDataSet friend) throws DBException {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
             FriendDAO dao = new FriendDAO(session);
-            Long _friend_id = dao.addFriend(id, friend_id);
+            Long _friend_id = dao.addFriend(user, friend);
             transaction.commit();
             session.close();
             return _friend_id;

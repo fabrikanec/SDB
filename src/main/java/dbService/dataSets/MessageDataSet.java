@@ -50,7 +50,7 @@ public class MessageDataSet implements Serializable { // Serializable Important 
         return id;
     }
 
-    private void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -58,7 +58,7 @@ public class MessageDataSet implements Serializable { // Serializable Important 
         return message_id;
     }
 
-    private void setMessageId(Long message_id) {
+    public void setMessageId(Long message_id) {
         this.message_id = message_id;
     }
 

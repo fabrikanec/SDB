@@ -43,13 +43,13 @@ public class PlayListDataSet implements Serializable { // Serializable Important
         return id;
     }
 
-    private void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public Long getTrackId() { return track_id; }
 
-    private void setTrackId(Long mus_id) { this.track_id = mus_id; }
+    public void setTrackId(Long mus_id) { this.track_id = mus_id; }
 
     public Blob getTrack() { return track; }
 

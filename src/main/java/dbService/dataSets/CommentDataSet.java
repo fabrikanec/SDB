@@ -47,7 +47,7 @@ public class CommentDataSet implements Serializable { // Serializable Important 
         return id;
     }
 
-    private void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -55,7 +55,7 @@ public class CommentDataSet implements Serializable { // Serializable Important 
         return comment_id;
     }
 
-    private void setCommentId(Long comment_id) {
+    public void setCommentId(Long comment_id) {
         this.comment_id = comment_id;
     }
 
@@ -64,14 +64,14 @@ public class CommentDataSet implements Serializable { // Serializable Important 
         return article_id;
     }
 
-    private void setArticleId(Long article_id) { this.article_id = article_id; }
+    public void setArticleId(Long article_id) { this.article_id = article_id; }
 
     @Nullable
     public Long getEventId() {
         return event_id;
     }
 
-    private void setEventId(Long event_id) {
+    public void setEventId(Long event_id) {
         this.event_id = event_id;
     }
 

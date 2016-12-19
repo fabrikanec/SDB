@@ -89,8 +89,8 @@ public class AccountService {
     }
 
     /** FriendDataSet Logic */
-    public Long addFriend(Long id, Long friend_id) throws DBException {
-        return dbService.addFriend(id, friend_id);
+    public Long addFriend(UsersDataSet user, UsersDataSet friend) throws DBException {
+        return dbService.addFriend(user, friend);
     }
 
     public Long getFriend(Long friend_id) throws DBException {

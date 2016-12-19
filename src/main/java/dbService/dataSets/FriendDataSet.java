@@ -5,6 +5,7 @@ import com.sun.javafx.beans.IDProperty;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -24,26 +25,38 @@ public class FriendDataSet implements Serializable { // Serializable Important t
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long syntetic_id;
 
+    @ManyToMany(fetch = FetchType.EAGER) // fetch = FetchType.LAZY
+    private Set<UsersDataSet> users = new HashSet<>();
+
     //Important to Hibernate!
     @SuppressWarnings("UnusedDeclaration")
     public FriendDataSet() {
     }
 
-    public FriendDataSet(Long id, Long friend_id) {
-        this.setId(id);
-        this.setFriendId(friend_id);
+    public FriendDataSet(UsersDataSet user, UsersDataSet friend) {
+        this.setId(user);
+        this.setFriendId(friend);
+        this.setFriend(friend);
 
     }
 
 
     @SuppressWarnings("UnusedDeclaration")
 
-    private void setId(Long id) { this.id = id; }
+    public void setId(UsersDataSet user) { this.id = user.getId(); }
 
-    //@ManyToMany(fetch = FetchType.LAZY, mappedBy = "genres")
     public Long getFriend() { return friend_id; }
 
-    private void setFriendId(Long friend_id) { this.friend_id = friend_id; }
+    public void setFriendId(UsersDataSet friend) { this.friend_id = friend.getId(); }
+
+    public Set<UsersDataSet> getFriends() {
+        return users;
+    }
+
+    public void setFriend(UsersDataSet user) {
+        this.users.add(user);
+    }
+
 
     public String toString() {
         return "FriendDataSet{" +

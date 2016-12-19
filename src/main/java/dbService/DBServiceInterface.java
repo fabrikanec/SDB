@@ -20,7 +20,7 @@ public interface DBServiceInterface {
     Long addArticle(Long id, char secure, String text, Date date) throws DBException;
     ArticleDataSet getArticle(Long article_id) throws DBException;
     /** friend logic */
-    Long addFriend(Long id, Long friend_id) throws DBException;
+    Long addFriend(UsersDataSet user, UsersDataSet friend) throws DBException;
     FriendDataSet getFriend(Long id) throws DBException;
     /** event logic */
     Long addEvent(Long id, String name, String text, String subj) throws DBException;

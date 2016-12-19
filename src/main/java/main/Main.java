@@ -80,7 +80,6 @@ public class Main {
         System.out.println(accountService.getMessageText(id_msg));
         System.out.println(accountService.getMessageText(id_msg1));
 
-        //Long id_com = accountService.addNewCommunity("Community");
         accountService.addUser(accountService.getUserByLogin("Todd"), "Community");
         accountService.addUser(accountService.getUserByLogin("Valio"), "Community");
         Long fromComUser = accountService.getUsers("Community").get(0).getId();
@@ -88,8 +87,8 @@ public class Main {
         System.out.println((fromComUser.equals(id)));
         System.out.println(fromComUser1.equals(id1));
 
-        //Long id_friend = accountService.addNewUser(new UserProfile("Volly", "Valio"));
-        //accountService.addFriend(id, id_friend);
-        //System.out.println(accountService.getFriend(id));
+        Long id_friend = accountService.addNewUser(new UserProfile("Volly", "Valio"));
+        accountService.addFriend(accountService.getUserByLogin("Volly"), accountService.getUserByLogin("Todd"));
+        System.out.println(accountService.getFriend(id_friend) == id);
     }
 }

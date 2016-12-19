@@ -44,7 +44,7 @@ public class ArticleDataSet implements Serializable { // Serializable Important 
 
     public Long getId() { return id; }
 
-    private void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -52,7 +52,7 @@ public class ArticleDataSet implements Serializable { // Serializable Important 
         return article_id;
     }
 
-    private void setArticleId(Long article_id) {
+    public void setArticleId(Long article_id) {
         this.article_id = article_id;
     }
 

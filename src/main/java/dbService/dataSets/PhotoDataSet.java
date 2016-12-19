@@ -38,13 +38,13 @@ public class PhotoDataSet implements Serializable { // Serializable Important to
         return id;
     }
 
-    private void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public Long getPhotoId() { return photo_id; }
 
-    private void setPhotoId(Long photo_id) { this.photo_id = photo_id; }
+    public void setPhotoId(Long photo_id) { this.photo_id = photo_id; }
 
     public Blob getPhoto() { return photo; }
 

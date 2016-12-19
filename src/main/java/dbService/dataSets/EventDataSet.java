@@ -45,7 +45,7 @@ public class EventDataSet implements Serializable { // Serializable Important to
         return id;
     }
 
-    private void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -53,7 +53,7 @@ public class EventDataSet implements Serializable { // Serializable Important to
         return event_id;
     }
 
-    private void setEventId(Long event_id) { this.event_id = event_id; }
+    public void setEventId(Long event_id) { this.event_id = event_id; }
 
     public String getName() { return name; }
 

@@ -38,13 +38,13 @@ public class VideoDataSet implements Serializable { // Serializable Important to
         return id;
     }
 
-    private void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public Long getVideoId() { return video_id; }
 
-    private void setVideoId(Long video_id) { this.video_id = video_id; }
+    public void setVideoId(Long video_id) { this.video_id = video_id; }
 
     public Blob getVideo() { return video; }
 
