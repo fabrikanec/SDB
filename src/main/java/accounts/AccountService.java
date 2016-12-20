@@ -59,7 +59,6 @@ public class AccountService {
         return sessionIdToProfile.get(sessionId);
     }
 
-
     /** ArticleDataSet Logic */
     public Long addArticle(Long id, char secure, String text, Date date) throws DBException {
         return  dbService.addArticle(id,secure, text, date);
@@ -130,6 +129,10 @@ public class AccountService {
         }
     }
 
+    public Long count_msg() throws DBException {
+        return dbService.count_msg();
+    }
+
     /** CommunityDataSet Logic */
     public Long addNewCommunity(String name) throws DBException {
         return dbService.addCommunity(name);
@@ -142,6 +145,10 @@ public class AccountService {
     public List<CommunityDataSet> getUsers(String com_name) throws DBException {
         return dbService.getUsers(com_name);
 
+    }
+
+    public Long count_comm() throws DBException {
+        return dbService.count_comm();
     }
 
     /** PhotoDataSet Logic */

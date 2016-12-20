@@ -7,6 +7,7 @@ import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.server.session.JDBCSessionManager;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import servlets.*;
@@ -15,8 +16,10 @@ import dbService.DBService;
 import dbService.dataSets.UsersDataSet;
 import chat.WebSocketChatServlet;
 
+import javax.persistence.EntityManager;
+import java.sql.CallableStatement;
+import java.sql.Types;
 import java.util.logging.Logger;
-
 
 public class Main {
     private static final Logger log = Logger.getLogger(Main.class.getName());
@@ -52,8 +55,8 @@ public class Main {
         server.join(); */
 
         //insert to db
-        Long id = accountService.addNewUser(new UserProfile("Todd", "Valio"));
-        System.out.println(accountService.getUserProfileByLogin("Todd").getPass());
+        Long id = accountService.addNewUser(new UserProfile("todd", "Valio"));
+        System.out.println(accountService.getUserProfileByLogin("todd").getPass());
         Long id1 = accountService.addNewUser(new UserProfile("Valio", "Todd"));
 
         Long id_article = accountService.addArticle(id, '0', "text", new java.util.Date());
@@ -80,10 +83,12 @@ public class Main {
         MessageDataSet.BoolType boolType = new MessageDataSet.BoolType();
         Long id_msg = accountService.addMessage(id, false, false, "msg", new java.util.Date());
         Long id_msg1 = accountService.addMessage(id, false, false, "msg666", new java.util.Date());
+        accountService.addMessage(id, false, false, "msg13", new java.util.Date());
+
         System.out.println(accountService.getMessageText(id_msg));
         System.out.println(accountService.getMessageText(id_msg1));
 
-        accountService.addUser(accountService.getUserByLogin("Todd"), "Community");
+        accountService.addUser(accountService.getUserByLogin("todd"), "Community");
         accountService.addUser(accountService.getUserByLogin("Valio"), "Community");
         Long fromComUser = accountService.getUsers("Community").get(0).getId();
         Long fromComUser1 = accountService.getUsers("Community").get(1).getId();
@@ -91,8 +96,11 @@ public class Main {
         System.out.println(fromComUser1.equals(id1));
 
         Long id_friend = accountService.addNewUser(new UserProfile("Volly", "Valio"));
-        accountService.addFriend(accountService.getUserByLogin("Volly"), accountService.getUserByLogin("Todd"));
+        accountService.addFriend(accountService.getUserByLogin("Volly"), accountService.getUserByLogin("todd"));
         System.out.println(accountService.getFriend(id_friend).equals(id));
+        //
+        System.out.println(accountService.count_comm());
+        System.out.println(accountService.count_msg());
         //
     }
 }

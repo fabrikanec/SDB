@@ -12,7 +12,7 @@ import java.util.Set;
 public class CommunityDataSet implements Serializable { // Serializable Important to Hibernate!
     private static final Long serialVersionUID = -8706689714326132798L;
 
-    @Column(name = "user_id")
+    @Column(name = "user_id", unique = true)
     private Long id;
 
     @Id

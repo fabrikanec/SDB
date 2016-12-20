@@ -14,6 +14,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+
 public class CommunityDAO {
     private Session session;
 
@@ -32,6 +37,7 @@ public class CommunityDAO {
     public Long addUser(UsersDataSet user, String communityName) throws HibernateException {
         return (Long) session.save(new CommunityDataSet(user, communityName));
     }
+
     public Long insertCommunity(String name) throws HibernateException {
         return (Long) session.save(new CommunityDataSet(name));
     }

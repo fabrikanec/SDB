@@ -16,7 +16,7 @@ public interface DBServiceInterface {
     Long addUser(String login, String password) throws DBException;
     UsersDataSet getUser(String login) throws DBException;
     UsersDataSet getUserById(Long id) throws DBException;
-    /** article logic */
+        /** article logic */
     Long addArticle(Long id, char secure, String text, Date date) throws DBException;
     ArticleDataSet getArticle(Long article_id) throws DBException;
     /** friend logic */
@@ -31,10 +31,12 @@ public interface DBServiceInterface {
     /** message logic */
     Long addMessage(Long id, Boolean receaverMsgDeletedFlag, Boolean posterMsgDeletedFlag, String text, Date date) throws DBException;
     MessageDataSet getMessage(Long message_id) throws DBException;
+    Long count_msg() throws DBException;
     /** community logic */
     Long addCommunity(String name) throws DBException;
     Long addUser(UsersDataSet user, String name) throws DBException;
     List<CommunityDataSet> getUsers(String com_name) throws DBException;
+    Long count_comm() throws DBException;
     /** photo logic*/
     Long addPhoto(Long id, Blob photo) throws DBException;
     PhotoDataSet getPhoto(Long photo_id) throws DBException;

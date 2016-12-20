@@ -1,5 +1,6 @@
 package dbService;
 
+import com.sun.org.apache.xerces.internal.impl.dv.DVFactoryException;
 import dbService.dao.*;
 import dbService.dataSets.*;
 import org.hibernate.HibernateException;
@@ -12,14 +13,47 @@ import org.hibernate.cfg.annotations.ListBinder;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.service.ServiceRegistry;
 
-import java.sql.Blob;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Date;
 import java.util.List;
 
-import javax.transaction.TransactionRequiredException;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 
+class CallableStatementImp {
+    Connection connection = null;
+
+    public CallableStatementImp() {
+        try {
+            // Loading the driver
+            Class.forName("org.postgresql.Driver");
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    // Creating a function to get a connection
+    public Connection createConnection() {
+        Connection con = null;
+        // checking connection
+        if (connection != null) {
+            System.out.println("Can't creaate a connection");
+            return connection;
+        } else {
+            try {
+                // Getting connection
+                con = DriverManager.getConnection(
+                        "jdbc:postgresql://localhost:5432/cezar", "cezar",
+                        "cezar");
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+        }
+        return con;
+    }
+}
 
 public class DBService implements DBServiceInterface {
     private static final String hibernate_show_sql = "true";
@@ -249,6 +283,7 @@ public class DBService implements DBServiceInterface {
         }
     }
 
+
     /**MessageDataSet Logic */
     public Long addMessage(Long id, Boolean receaverMsgDeletedFlag, Boolean posterMsgDeletedFlag, String text, Date date) throws DBException {
         try {
@@ -273,6 +308,29 @@ public class DBService implements DBServiceInterface {
             return dataSet;
         } catch (HibernateException e) {
             throw new DBException(e);
+        }
+    }
+
+    public Long count_msg() throws DBException {
+        CallableStatementImp calllableStatement = new CallableStatementImp();
+        try (Connection connection = calllableStatement.createConnection()) {
+            // Creating Callable Statement
+            String query = "select count_messages()";
+            CallableStatement cs = connection.prepareCall(query);
+            ResultSet rs = cs.executeQuery();
+            // checking result
+            if (rs == null) {
+                System.out.println("Result is null");
+                return 0L;
+            } else {
+                rs.next();
+                String res = (rs.getString(1));
+                Long resultCount = Long.parseLong(res);
+                return resultCount;
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return 0L;
         }
     }
     
@@ -314,6 +372,29 @@ public class DBService implements DBServiceInterface {
             return dataSet;
         } catch (HibernateException e) {
             throw new DBException(e);
+        }
+    }
+
+    public Long count_comm() throws DBException {
+        CallableStatementImp callableStatement = new CallableStatementImp();
+        try(Connection connection = callableStatement.createConnection()) {
+            // Creating Callable Statement
+            String query = "select count_comments()";
+            CallableStatement cs = connection.prepareCall(query);
+            ResultSet rs = cs.executeQuery();
+            // checking result
+            if (rs == null) {
+                System.out.println("Result is null");
+                return 0L;
+            } else {
+                rs.next();
+                String res =  (rs.getString(1));
+                Long resultCount = Long.parseLong(res);
+                return resultCount;
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return 0L;
         }
     }
 
