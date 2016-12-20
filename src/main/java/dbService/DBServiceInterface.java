@@ -29,7 +29,7 @@ public interface DBServiceInterface {
     Long addComment(Long id, Long article_id, Long event_id, String text) throws DBException;
     CommentDataSet getComment(Long id) throws DBException;
     /** message logic */
-    Long addMessage(Long id, char receaverMsgDeletedFlag, char posterMsgDeletedFlag, String text, Date date) throws DBException;
+    Long addMessage(Long id, Boolean receaverMsgDeletedFlag, Boolean posterMsgDeletedFlag, String text, Date date) throws DBException;
     MessageDataSet getMessage(Long message_id) throws DBException;
     /** community logic */
     Long addCommunity(String name) throws DBException;

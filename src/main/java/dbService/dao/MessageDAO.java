@@ -23,7 +23,7 @@ public class MessageDAO {
         return ((MessageDataSet) criteria.add(Restrictions.eq("message_id", message_id)).uniqueResult());
     }
 
-    public Long insertMessage(Long id, char receaverMsgDeletedFlag, char posterMsgDeletedFlag, String text, Date date) throws HibernateException {
+    public Long insertMessage(Long id, Boolean receaverMsgDeletedFlag, Boolean posterMsgDeletedFlag, String text, Date date) throws HibernateException {
         return (Long) session.save(new MessageDataSet(id, receaverMsgDeletedFlag, posterMsgDeletedFlag, text, date));
     }
 }

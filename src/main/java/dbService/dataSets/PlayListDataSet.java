@@ -1,10 +1,12 @@
 package dbService.dataSets;
 
-import com.sun.javafx.collections.TrackableObservableList;
+import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.usertype.UserType;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Blob;
+import java.sql.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user_playlist")
@@ -21,9 +23,6 @@ public class PlayListDataSet implements Serializable { // Serializable Important
 
     @Column(name = "track")
     private Blob track;
-
-    //@Column(name = "trackalbum")
-    //private TrackAlbum trackAlbum;
 
     //Important to Hibernate!
     @SuppressWarnings("UnusedDeclaration")
@@ -47,13 +46,21 @@ public class PlayListDataSet implements Serializable { // Serializable Important
         this.id = id;
     }
 
-    public Long getTrackId() { return track_id; }
+    public Long getTrackId() {
+        return track_id;
+    }
 
-    public void setTrackId(Long mus_id) { this.track_id = mus_id; }
+    public void setTrackId(Long mus_id) {
+        this.track_id = mus_id;
+    }
 
-    public Blob getTrack() { return track; }
+    public Blob getTrack() {
+        return track;
+    }
 
-    public void setTrack(Blob track) { this.track = track; }
+    public void setTrack(Blob track) {
+        this.track = track;
+    }
 
     //public TrackAlbum getTrackAlbum() { return trackAlbum; }
 
@@ -65,15 +72,5 @@ public class PlayListDataSet implements Serializable { // Serializable Important
                 "id=" + id +
                 ", track_id='" + track_id + '\'' +
                 '}';
-    }
-
-    public class TrackAlbum {
-        private String description;
-        private Blob image;
-
-        public TrackAlbum(String description, Blob image) {
-            this.description = description;
-            this.image = image;
-        }
     }
 }

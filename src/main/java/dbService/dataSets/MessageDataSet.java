@@ -1,11 +1,30 @@
 package dbService.dataSets;
 
+
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
+import org.hibernate.usertype.ParameterizedType;
+import org.hibernate.usertype.UserType;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.Properties;
+import java.util.logging.Logger;
+
+import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
 
 @Entity
 @Table(name = "user_message")
+@TypeDefs({
+        @TypeDef(name = MessageDataSet.BoolType.NAME, typeClass = MessageDataSet.BoolType.class)
+        })
 public class MessageDataSet implements Serializable { // Serializable Important to Hibernate!
     private static final Long serialVersionUID = -8706689714326132798L;
 
@@ -18,10 +37,12 @@ public class MessageDataSet implements Serializable { // Serializable Important 
     private Long message_id;
 
     @Column(name = "receaver_msg_deleted")
-    private char receaverMsgDeletedFlag;
+    @Type(type = BoolType.NAME)
+    private Boolean receaverMsgDeletedFlag;
 
     @Column (name = "poster_msg_deleted")
-    private char posterMsgDeletedFlag;
+    @Type(type = BoolType.NAME)
+    private Boolean posterMsgDeletedFlag;
 
     @Column (name = "text")
     private String text;
@@ -34,7 +55,7 @@ public class MessageDataSet implements Serializable { // Serializable Important 
     public MessageDataSet() {
     }
 
-    public MessageDataSet(Long id, char receaverMsgDeletedFlag, char posterMsgDeletedFlag, String text, Date date) {
+    public MessageDataSet(Long id, Boolean receaverMsgDeletedFlag, Boolean posterMsgDeletedFlag, String text, Date date) {
         this.setId(id);
         //this.setMessageId(message_id);
         this.setReceaverMsgDeleted(receaverMsgDeletedFlag);
@@ -62,19 +83,19 @@ public class MessageDataSet implements Serializable { // Serializable Important 
         this.message_id = message_id;
     }
 
-    public char getReceaverMsgDeleated() {
+    public Boolean getReceaverMsgDeleated() {
         return receaverMsgDeletedFlag;
     }
 
-    public void setReceaverMsgDeleted(char flag) {
+    public void setReceaverMsgDeleted(Boolean flag) {
         this.receaverMsgDeletedFlag = flag;
     }
 
-    public char getPosterMsgDeleted() {
+    public Boolean getPosterMsgDeleted() {
         return posterMsgDeletedFlag;
     }
 
-    public void setPosterMsgDeleted(char flag) {
+    public void setPosterMsgDeleted(Boolean flag) {
         this.posterMsgDeletedFlag = flag;
     }
 
@@ -91,5 +112,101 @@ public class MessageDataSet implements Serializable { // Serializable Important 
                 "id=" + id +
                 ", message_id='" + message_id + '\'' +
                 '}';
+    }
+
+    public static class BoolType implements UserType, ParameterizedType {
+
+        public static final String NAME = "TF";
+
+        private static final Logger LOGGER = Logger.getLogger(BoolType.NAME);
+
+        private int length = 1;
+
+        @Override
+        public int[] sqlTypes() {
+            return new int[] { Types.VARCHAR };
+        }
+
+        @SuppressWarnings("rawtypes")
+        @Override
+        public Class returnedClass() {
+            return Boolean.class;
+        }
+
+        @Override
+        public boolean equals(final Object x, final Object y) throws HibernateException {
+            if (x == null || y == null) {
+                return false;
+            } else {
+                return x.equals(y);
+            }
+        }
+
+        @Override
+        public int hashCode(final Object x) throws HibernateException {
+            assert (x != null);
+            return x.hashCode();
+        }
+
+        @Override
+        public Object nullSafeGet(final ResultSet rs, final String[] names, final SessionImplementor session, final Object owner) throws HibernateException, SQLException {
+            final String s = rs.getString(names[0]);
+            if (s.isEmpty()) {
+                return false;
+            }
+            if ("T".equalsIgnoreCase(s.trim())) {
+                return Boolean.TRUE;
+            }
+            return Boolean.FALSE;
+        }
+
+        @Override
+        public void nullSafeSet(final PreparedStatement st, final Object value, final int index, final SessionImplementor session) throws HibernateException, SQLException {
+            String s = Boolean.TRUE.equals(value) ? "T" : "F";
+            if (this.length > 1) {
+                s = s.trim();
+            }
+            st.setString(index, s);
+        }
+
+        @Override
+        public Object deepCopy(final Object value) throws HibernateException {
+            return value;
+        }
+
+        @Override
+        public boolean isMutable() {
+            return true;
+        }
+
+        @Override
+        public Serializable disassemble(final Object value) throws HibernateException {
+            return (Serializable) value;
+        }
+
+        @Override
+        public Object assemble(final Serializable cached, final Object owner) throws HibernateException {
+            return cached;
+        }
+
+        @Override
+        public Object replace(final Object original, final Object target, final Object owner) throws HibernateException {
+            return original;
+        }
+
+        @Override
+        public void setParameterValues(final Properties parameters) {
+            if (parameters != null && !parameters.isEmpty()) {
+                final String lengthString = parameters.getProperty("length");
+                try {
+                    if (!lengthString.isEmpty()) {
+                        this.length = Integer.parseInt(lengthString);
+                    }
+                } catch (final NumberFormatException e) {
+                    LOGGER.warning("Error parsing int " + lengthString);
+                }
+            }
+        }
+
     }
 }

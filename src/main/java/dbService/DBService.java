@@ -18,6 +18,8 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.TransactionRequiredException;
+
 
 public class DBService implements DBServiceInterface {
     private static final String hibernate_show_sql = "true";
@@ -248,7 +250,7 @@ public class DBService implements DBServiceInterface {
     }
 
     /**MessageDataSet Logic */
-    public Long addMessage(Long id, char receaverMsgDeletedFlag, char posterMsgDeletedFlag, String text, Date date) throws DBException {
+    public Long addMessage(Long id, Boolean receaverMsgDeletedFlag, Boolean posterMsgDeletedFlag, String text, Date date) throws DBException {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();

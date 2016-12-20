@@ -52,7 +52,7 @@ public class FriendDataSet implements Serializable { // Serializable Important t
     public Set<UsersDataSet> getFriends() {
         return users;
     }
-    
+
     public void setFriend(UsersDataSet user) {
         this.users.add(user);
     }

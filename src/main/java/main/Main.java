@@ -2,6 +2,7 @@ package main;
 
 import accounts.AccountService;
 import accounts.UserProfile;
+import dbService.dataSets.MessageDataSet;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -76,8 +77,9 @@ public class Main {
         System.out.println(accountService.getCommentText(id_comment));
         System.out.println(accountService.getCommentText(id_comment1));
 
-        Long id_msg = accountService.addMessage(id, '0', '0', "msg", new java.util.Date());
-        Long id_msg1 = accountService.addMessage(id, '0', '0', "msg666", new java.util.Date());
+        MessageDataSet.BoolType boolType = new MessageDataSet.BoolType();
+        Long id_msg = accountService.addMessage(id, false, false, "msg", new java.util.Date());
+        Long id_msg1 = accountService.addMessage(id, false, false, "msg666", new java.util.Date());
         System.out.println(accountService.getMessageText(id_msg));
         System.out.println(accountService.getMessageText(id_msg1));
 
